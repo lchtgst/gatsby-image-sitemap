@@ -7,7 +7,7 @@ module.exports = {
     sitemapPath: "image-sitemap.xml",
 
     // do not change, unless you've done modification to your gatsby-image classes
-    gatsbyImageSelector: ".gatsby-image-wrapper",
+    imageSelector: ".projectImageWrapper",
 
     // build dir to read the output files from
     // also to write the sitemap to
