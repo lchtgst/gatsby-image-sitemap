@@ -78,7 +78,7 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
             url: siteUrl + path,
             img: pageImagesKeys.map(image => {
                 return {
-                    url: siteUrl + image,
+                    url: image.slice(0,-8) + ".jpg", //siteUrl + image
                     title: pageImages[image],
                 };
             }),
