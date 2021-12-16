@@ -60,8 +60,6 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
             const alt = img.attr("alt");
             const src = img.attr("src");
 
-            console.log("img:" + alt);
-
             if (options.ignoreImagesWithoutAlt && !alt) {
                 return;
             }
@@ -71,7 +69,6 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
 
         const pageImagesKeys = Object.keys(pageImages);
         if (pageImagesKeys.length === 0) {
-            console.log("img length 0");
             return;
         }
 
