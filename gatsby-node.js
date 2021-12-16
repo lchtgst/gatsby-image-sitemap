@@ -39,7 +39,7 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
     let urlData = [];
 
     allPagePaths.filter(path => options.excludePaths.indexOf(path) === -1).forEach(path => {
-        const filePath = path + (path.indexOf(".html") === -1 ? "index.html" : "");
+        const filePath = path + (path.indexOf(".html") === -1 ? "/index.html" : "");
 
         const fileContent = fs.readFileSync(`${options.buildDir}${filePath}`).toString("utf8");
         const pageDOM = cheerio.load(fileContent, {
@@ -51,14 +51,16 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
         const pageImages = {};
 
         // find all gatsby-image from the current page
-        // we have to find the parent (e.g. .gatsby-image-wrapper), 
+        // we have to find the parent (e.g. .gatsby-image-wrapper, defined in /default-options), 
         // so we can extract the alt from <img /> and all resolution
         // links from the <source /> tag 
-        pageDOM(options.gatsbyImageSelector).each(function() {
+        pageDOM(options.imageSelector).each(function() {
             const el = cheerio(this);
-            const img = el.find("picture").find("img");
+            const img = el.children("img");
             const alt = img.attr("alt");
             const src = img.attr("src");
+
+            console.log("img:" + alt);
 
             if (options.ignoreImagesWithoutAlt && !alt) {
                 return;
@@ -69,6 +71,7 @@ exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
 
         const pageImagesKeys = Object.keys(pageImages);
         if (pageImagesKeys.length === 0) {
+            console.log("img length 0");
             return;
         }
 
