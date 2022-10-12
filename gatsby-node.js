@@ -1,7 +1,9 @@
-const cheerio = require("cheerio");
+var cheerio = require("cheerio");
 const sm = require("sitemap");
 const fs = require("fs");
 const defaultOptions = require('./default-options');
+
+if (typeof( cheerio )!='function') cheerio=require("cheerio").default;
 
 exports.onPostBuild = async ({ graphql, pathPrefix }, pluginOptions) => {
     const options = {
